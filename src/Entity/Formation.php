@@ -16,7 +16,7 @@ class Formation
     /**
      * Début de chemin vers les images
      */
-    private const cheminImage = "https://i.ytimg.com/vi/";
+    private const CHEMIN_IMAGE = "https://i.ytimg.com/vi/";
     
     /**
      * @ORM\Id

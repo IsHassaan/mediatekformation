@@ -52,9 +52,9 @@ class PlaylistRepository extends ServiceEntityRepository
      */
     public function findAllOrderBy($champ, $ordre): array{
         return $this->createQueryBuilder('p')
-                ->select(PlaylistRepository::SELECT)
-                ->addSelect(PlaylistRepository::ADDNAME)
-                ->addSelect(PlaylistRepository::ADDSELECT)
+                ->select(self::SELECT)
+                ->addSelect(self::ADDNAME)
+                ->addSelect(self::ADDSELECT)
                 ->leftjoin('p.formations', 'f')
                 ->leftjoin('f.categories', 'c')
                 ->groupBy('p.id')
@@ -79,9 +79,9 @@ class PlaylistRepository extends ServiceEntityRepository
         }    
         if($table==""){      
             return $this->createQueryBuilder('p')
-                    ->select(PlaylistRepository::SELECT)
-                    ->addSelect(PlaylistRepository::ADDNAME)
-                    ->addSelect(PlaylistRepository::ADDSELECT)
+                    ->select(self::SELECT)
+                    ->addSelect(self::ADDNAME)
+                    ->addSelect(self::ADDSELECT)
                     ->leftjoin('p.formations', 'f')
                     ->leftjoin('f.categories', 'c')
                     ->where('p.'.$champ.' LIKE :valeur')
@@ -94,9 +94,9 @@ class PlaylistRepository extends ServiceEntityRepository
                     ->getResult();              
         }else{   
             return $this->createQueryBuilder('p')
-                    ->select(PlaylistRepository::SELECT)
-                    ->addSelect(PlaylistRepository::ADDNAME)
-                    ->addSelect(PlaylistRepository::ADDSELECT)
+                    ->select(self::SELECT)
+                    ->addSelect(self::ADDNAME)
+                    ->addSelect(self::ADDSELECT)
                     ->leftjoin('p.formations', 'f')
                     ->leftjoin('f.categories', 'c')
                     ->where('c.'.$champ.' LIKE :valeur')

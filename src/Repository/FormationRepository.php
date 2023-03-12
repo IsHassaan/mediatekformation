@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Formation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Routing\Route;
 
 /**
  * @extends ServiceEntityRepository<Formation>
@@ -30,6 +31,7 @@ class FormationRepository extends ServiceEntityRepository
         }
     }
 
+    
     public function remove(Formation $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
@@ -38,6 +40,7 @@ class FormationRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    
 
     /**
      * Retourne toutes les formations triées sur un champ
@@ -60,7 +63,9 @@ class FormationRepository extends ServiceEntityRepository
                     ->getResult();            
         }
     }
+    
 
+    
     /**
      * Enregistrements dont un champ contient une valeur
      * ou tous les enregistrements si la valeur est vide

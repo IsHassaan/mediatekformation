@@ -1,10 +1,13 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\Playlist;
+use App\Form\PlaylistType;
 use App\Repository\CategorieRepository;
 use App\Repository\FormationRepository;
 use App\Repository\PlaylistRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -106,5 +109,82 @@ class PlaylistsController extends AbstractController {
             'playlistformations' => $playlistFormations
         ]);        
     }       
+    
+    /**
+     * 
+     * @var $repository
+     */
+    private $repository;
+    
+    /**
+     * 
+     * @param PlaylistRepository $playlistRepository
+     */
+    private function _construct(PlaylistRepository $playlistRepository){
+        $this->repository=$playlistRepository;
+    }
+    
+    
+   /**
+    * @Route("/playlist/{id}/delete", name="playlist_delete")
+    * @param Playlist $playlist
+    * @return RedirectResponse
+    */
+   public function suppr(Playlist $playlist): RedirectResponse
+   {
+       $formations = $playlist->getFormations();
+       foreach ($formations as $formation) {
+           if ($formation->getPlaylist() !== null) {
+               $this->addFlash('warning', 'La playlist est liée à une formation');
+               return $this->redirectToRoute('playlists');
+           }
+       }
+
+       $this->playlistRepository->remove($playlist, true);
+       $this->addFlash('success', 'La playlist a été supprimée avec succès');
+       return $this->redirectToRoute('playlists');
+   }
+
+    
+    /**
+     * @Route("/playlist/{id}/edit", name="playlist_edit")
+     * @param Playlist $playlist
+     * @return Response
+     * @param Request $request
+     */
+    public function edit(Playlist $playlist, Request $request):Response{
+        $formPlaylist = $this->createForm(PlaylistType::class, $playlist);
+        $formPlaylist->handleRequest($request);
+        if($formPlaylist->isSubmitted()&& $formPlaylist->isValid()){
+            $this->playlistRepository->add($playlist, true);
+            return $this->redirectToRoute('playlists');
+        }
+         return $this->render("pages/editPlaylist.html.twig",[
+            'playlist'=>$playlist,
+             'formPlaylist' =>$formPlaylist->createView()
+        ]);
+    }
+    
+    
+    
+    /**
+     * @Route("/playlist/ajout", name="playlist_ajout")
+     * @param Playlist $playlist
+     * @return Response
+     * @param Request $request
+     */
+    public function ajout(Request $request):Response{
+        $playlist=new Playlist();
+        $formPlaylist = $this->createForm(PlaylistType::class, $playlist);
+        $formPlaylist->handleRequest($request);
+        if($formPlaylist->isSubmitted()&& $formPlaylist->isValid()){
+            $this->playlistRepository->add($playlist, true);
+            return $this->redirectToRoute('playlists');
+        }
+         return $this->render("pages/ajoutPlaylist.html.twig",[
+            'playlist'=>$playlist,
+             'formPlaylist' =>$formPlaylist->createView()
+        ]);
+    }
     
 }

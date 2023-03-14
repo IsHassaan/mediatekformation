@@ -1,0 +1,11 @@
+{% if app.user %}
+{% extends "base.html.twig" %}
+{% block body %}
+<form class="form-inline mt-l" method="POST" action="{{ path('playlist_ajout') }}">
+    <div class="form-group mr-l mb-2">
+        <input type="text" class="sm" name="nom">
+        <button type="submit" class="btn btn-primary mb-2 btm-sm">Ajouter</button>
+    </div>
+</form>
+{% endblock %}
+{% endif %}

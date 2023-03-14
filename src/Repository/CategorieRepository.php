@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Categorie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Routing\Route;
+use Symfony\Flex\Response;
 
 /**
  * @extends ServiceEntityRepository<Categorie>
@@ -53,6 +55,7 @@ class CategorieRepository extends ServiceEntityRepository
                 ->orderBy('c.name', 'ASC')   
                 ->getQuery()
                 ->getResult();        
-    }    
-
+    } 
+   
+   
 }

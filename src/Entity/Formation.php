@@ -55,9 +55,15 @@ class Formation
      */
     private $categories;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Playlist::class)
+     */
+    private $playlists;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
+        $this->playlists = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -162,6 +168,30 @@ class Formation
     public function removeCategory(Categorie $category): self
     {
         $this->categories->removeElement($category);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Playlist>
+     */
+    public function getPlaylists(): Collection
+    {
+        return $this->playlists;
+    }
+
+    public function addPlaylist(Playlist $playlist): self
+    {
+        if (!$this->playlists->contains($playlist)) {
+            $this->playlists[] = $playlist;
+        }
+
+        return $this;
+    }
+
+    public function removePlaylist(Playlist $playlist): self
+    {
+        $this->playlists->removeElement($playlist);
 
         return $this;
     }

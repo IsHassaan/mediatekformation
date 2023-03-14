@@ -45,6 +45,19 @@
                 {% if playlists[k].name != ancplaylist %}
                     {% set ancplaylist = playlists[k].name %}
                     <tr class="align-middle">
+                        {% if app.user %}
+                        <td>
+                            <a href="{{ path('playlist_edit', {'id':playlists[k].id})}}"
+                            class="btn btn-secondary">Editer
+                            </a>
+
+
+                            <a href="{{ path('playlist_delete', {'id':playlists[k].id})}}"
+                            onclick="return confirm('Voulez vous supprimer la playlist suivante : {{playlists[k].name}} ?')" 
+                            class="btn btn-danger">Supprimer
+                            </a>
+                        </td>
+                        {% endif %}
                         <td>
                             <h5 class="text-info">
                                 {{ playlists[k].name }}
@@ -69,5 +82,13 @@
                 {% endif %}
             {% endfor %}
         </tbody>
+        <br>
+        {% if app.user %}
+        <p class="text-end">
+            <a href="{{ path('playlist_ajout')}}" class="btn btn-primary">
+                Ajouter une formation
+            </a>
+        </p>
+       {% endif %} 
     </table>
 {% endblock %}

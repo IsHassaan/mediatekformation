@@ -1,0 +1,43 @@
+{# empty Twig template #}
+{% extends "basefront.html.twig" %}
+{% block body %}
+    {% if app.user %}
+    <form class="form-inline mt-1" method="POST" action="{{ path('categorie_ajout') }}">
+    <div class="form-group mr-1 mb-2">
+        <input type="text" class="sm" name="nom">
+        <button type="submit" class="btn btn-primary mb-2 btn-sm">Ajouter</button>
+    </div>
+    </form>
+    {% endif %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Nom
+                </th>
+                {% if app.user %}
+                 <th>
+                     Actions
+                </th>
+                {% endif %}
+            </tr>
+        <thead>
+        <tbody>
+            {% for categorie in categories %}
+            <tr>
+                <td>
+                    {{ categorie.name }}
+                </td>
+                {% if app.user %}
+                <td>
+                     <a href="{{ path('categorie_delete', {'id':categorie.id})}}"
+                        onclick="return confirm('Voulez vous supprimer la categorie suivante : {{categorie.name}} ?')" 
+                        class="btn btn-danger">Supprimer
+                    </a>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

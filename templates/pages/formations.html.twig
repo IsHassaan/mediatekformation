@@ -58,12 +58,15 @@
         <tbody>
         <br>
         <p class="text-end">
+            {% if app.user %}
             <a href="{{ path('formation_ajout')}}" class="btn btn-primary">
                 Ajouter une formation
             </a>
+            {% endif %}
         </p>
             {% for formation in formations %}
                 <tr class="align-middle">
+                    {% if app.user %}
                     <td>
                         <a href="{{ path('formation_edit', {'id':formation.id})}}"
                         class="btn btn-secondary">Editer
@@ -75,6 +78,7 @@
                         class="btn btn-danger">Supprimer
                         </a>
                     </td>
+                    {% endif %}
                     <td>
                         <h5 class="text-info">
                             {{ formation.title }}

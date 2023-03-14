@@ -1,9 +1,8 @@
 {% extends "basefront.html.twig" %}
-
 {% block body %}
     {% if app.user %}
-    <h2>Ajout d'une formation</h2>
-    {{ include('pages/mediatekForm.twig') }}
+    <h2>Ajout d'une playlist</h2>
+    {{ include('pages/playlistForm.html.twig') }}
     {% endif %}
 {% endblock %}
 

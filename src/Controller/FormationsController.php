@@ -127,7 +127,7 @@ class FormationsController extends AbstractController {
             $this->formationRepository->add($formation, true);
             return $this->redirectToRoute('formations');
         }
-         return $this->render("pages/ajoutFormation.html.twig",[
+         return $this->render("pages/editFormation.html.twig",[
             'formation'=>$formation,
              'formFormation' =>$formFormation->createView()
         ]);
@@ -135,7 +135,7 @@ class FormationsController extends AbstractController {
     
     
   /**
-     * @Route("/admin/ajout", name="formation_ajout")
+     * @Route("/formation/ajout", name="formation_ajout")
      * @param Formation $formation
      * @return Response
      * @param Request $request
@@ -148,7 +148,7 @@ class FormationsController extends AbstractController {
             $this->formationRepository->add($formation, true);
             return $this->redirectToRoute('formations');
         }
-         return $this->render("admin/formationAjout.html.twig",[
+         return $this->render("pages/ajoutFormation.html.twig",[
             'formation'=>$formation,
              'formFormation' =>$formFormation->createView()
         ]);
